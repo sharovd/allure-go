@@ -16,8 +16,8 @@ type SuiteStruct struct {
 
 func (s *SuiteStruct) TestNewTest(t provider.T) {
 	t.Epic("Compare with allure-go")
-	t.Description("New Test Description")
-	t.WithNewStep("Step description", func(ctx provider.StepCtx) {
+	t.Description("`New test description`")
+	t.WithNewStep("Step name", func(ctx provider.StepCtx) {
 
 	})
 }
@@ -63,7 +63,7 @@ func doSomething(ctx provider.StepCtx) {
 
 func (s *SuiteStruct) TestWithIntricateSubsteps(t provider.T) {
 	t.Epic("Compare with allure-go")
-	t.Description("Test")
+	t.Description("`Test description`")
 
 	t.WithNewStep("Step 1", func(ctx provider.StepCtx) {
 		doSomething(ctx)
