@@ -10,27 +10,25 @@ import (
 	"github.com/ozontech/allure-go/pkg/framework/runner"
 )
 
-func TestPanicProviderDemo(realT *testing.T) {
+func TestOnlyProviderDemo(realT *testing.T) {
 	r := runner.NewRunner(realT, realT.Name())
 	r.BeforeEach(func(t provider.T) {
 		t.Epic("Only Provider Demo")
 		t.Feature("runner.RunTest")
+		t.Description("`allure-go allows you to use allure without suites. Even if it broken or failed`")
 	})
-	r.NewTest("Test1", func(t provider.T) {
-		t.Title("Some Panic test 1")
-		t.Description("allure-go allows you to use allure without suites. Even if it panics or failed")
+	r.NewTest("Broken test", func(t provider.T) {
+		t.Title("Some broken test")
 		panic("whoops")
 	})
 
-	r.NewTest("Test3", func(t provider.T) {
-		t.Title("Some Failed test 2")
-		t.Description("allure-go allows you to use allure without suites. Even if it panics or failed")
+	r.NewTest("Failed test", func(t provider.T) {
+		t.Title("Some failed test")
 		t.Require().NotNil(nil)
 	})
 
-	r.NewTest("Test2", func(t provider.T) {
-		t.Title("Some Normal test 2")
-		t.Description("allure-go allows you to use allure without suites. Even if it panics or failed")
+	r.NewTest("Passed test", func(t provider.T) {
+		t.Title("Some passed test")
 	})
 
 	r.RunTests()

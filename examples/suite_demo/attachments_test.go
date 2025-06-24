@@ -25,12 +25,12 @@ func (s *AttachmentTestDemoSuite) TestAttachment(t provider.T) {
 	t.Feature("Attachments")
 	t.Title("Test Attachments")
 	t.Description(`
-		Test's test body and all steps inside can contain attachments`)
+		The test body and all its steps can contain attachments`)
 
-	t.Tags("Attachments", "BeforeAfter", "Steps")
+	t.Tags("Attachments", "Steps")
 
 	attachmentText := `THIS IS A TEXT ATTACHMENT`
-	t.WithAttachments(allure.NewAttachment("Text Attachment if TestAttachment", allure.Text, []byte(attachmentText)))
+	t.WithAttachments(allure.NewAttachment("Text Attachment", allure.Text, []byte(attachmentText)))
 
 	step := allure.NewSimpleStep("Step A")
 	var ExampleJson = JSONStruct{"this is JSON message"}
@@ -46,12 +46,12 @@ type AttachmentDemoSuite struct {
 func (s *AttachmentDemoSuite) BeforeAll(t provider.T) {
 	// this action will create a step in Set up
 	attachmentText := `THIS IS A TEXT ATTACHMENT`
-	t.WithAttachments(allure.NewAttachment("Text Attachment for Before suite", allure.Text, []byte(attachmentText)))
+	t.WithAttachments(allure.NewAttachment("Text Attachment for Before Suite", allure.Text, []byte(attachmentText)))
 
-	step := allure.NewSimpleStep("Before suite Step")
+	step := allure.NewSimpleStep("Before Suite Step")
 	var ExampleJson = JSONStruct{"This is BeforeAll JSON message"}
 	attachmentJSON, _ := json.Marshal(ExampleJson)
-	step.WithAttachments(allure.NewAttachment("Json Attachment for Before suite Step", allure.JSON, attachmentJSON))
+	step.WithAttachments(allure.NewAttachment("Json Attachment for Before Suite Step", allure.JSON, attachmentJSON))
 	t.Step(step)
 }
 
@@ -70,12 +70,12 @@ func (s *AttachmentDemoSuite) BeforeEach(t provider.T) {
 func (s *AttachmentDemoSuite) AfterAll(t provider.T) {
 	// this action will create a step in Tear down
 	attachmentText := `THIS IS A TEXT ATTACHMENT`
-	t.WithAttachments(allure.NewAttachment("Text Attachment for After suite", allure.Text, []byte(attachmentText)))
+	t.WithAttachments(allure.NewAttachment("Text Attachment for After Suite", allure.Text, []byte(attachmentText)))
 
-	step := allure.NewSimpleStep("After suite Step")
+	step := allure.NewSimpleStep("After Suite Step")
 	var ExampleJson = JSONStruct{"This is AfterAll JSON message"}
 	attachmentJSON, _ := json.Marshal(ExampleJson)
-	step.WithAttachments(allure.NewAttachment("Json Attachment for After suite Step", allure.JSON, attachmentJSON))
+	step.WithAttachments(allure.NewAttachment("Json Attachment for After Suite Step", allure.JSON, attachmentJSON))
 	t.Step(step)
 }
 
@@ -91,7 +91,7 @@ func (s *AttachmentDemoSuite) AfterEach(t provider.T) {
 	t.Step(step)
 }
 
-func (s *AttachmentDemoSuite) TestAttachment_1(t provider.T) {
+func (s *AttachmentDemoSuite) TestBeforeAfterAttachments(t provider.T) {
 	t.Epic("Demo")
 	t.Feature("Attachments")
 	t.Title("Test with Before/After Attachments")
@@ -107,30 +107,30 @@ type NestedAttachmentDemoSuite struct {
 }
 
 func (s *NestedAttachmentDemoSuite) BeforeAll(t provider.T) {
-	t.WithNewStep("SetupSuite step", func(ctx provider.StepCtx) {
+	t.WithNewStep("Before Suite Step", func(ctx provider.StepCtx) {
 		attachmentText := `THIS IS A TEXT ATTACHMENT`
-		ctx.WithAttachments(allure.NewAttachment("Text Attachment for Before all", allure.Text, []byte(attachmentText)))
+		ctx.WithAttachments(allure.NewAttachment("Text Attachment for Before Suite Step", allure.Text, []byte(attachmentText)))
 	})
 }
 
 func (s *NestedAttachmentDemoSuite) AfterAll(t provider.T) {
-	t.WithNewStep("TearDownSuite step", func(ctx provider.StepCtx) {
+	t.WithNewStep("After Suite Step", func(ctx provider.StepCtx) {
 		attachmentText := `THIS IS A TEXT ATTACHMENT`
-		ctx.WithAttachments(allure.NewAttachment("Text Attachment for After all", allure.Text, []byte(attachmentText)))
+		ctx.WithAttachments(allure.NewAttachment("Text Attachment for After Suite Step", allure.Text, []byte(attachmentText)))
 	})
 }
 
 func (s *NestedAttachmentDemoSuite) BeforeEach(t provider.T) {
-	t.WithNewStep("SetupTest step", func(ctx provider.StepCtx) {
+	t.WithNewStep("Before Test Step", func(ctx provider.StepCtx) {
 		attachmentText := `THIS IS A TEXT ATTACHMENT`
-		ctx.WithAttachments(allure.NewAttachment("Text Attachment for Before Test", allure.Text, []byte(attachmentText)))
+		ctx.WithAttachments(allure.NewAttachment("Text Attachment for Before Test Step", allure.Text, []byte(attachmentText)))
 	})
 }
 
 func (s *NestedAttachmentDemoSuite) AfterEach(t provider.T) {
-	t.WithNewStep("TearDownTest step", func(ctx provider.StepCtx) {
+	t.WithNewStep("After Test Step", func(ctx provider.StepCtx) {
 		attachmentText := `THIS IS A TEXT ATTACHMENT`
-		ctx.WithAttachments(allure.NewAttachment("Text Attachment for After Test", allure.Text, []byte(attachmentText)))
+		ctx.WithAttachments(allure.NewAttachment("Text Attachment for After Test Step", allure.Text, []byte(attachmentText)))
 	})
 }
 
@@ -139,7 +139,7 @@ func (s *NestedAttachmentDemoSuite) TestNestedAttachment(t provider.T) {
 	t.Feature("Attachments")
 	t.Title("Test NestedAttachments")
 	t.Description(`
-		Test "Set up", Test "Tear down", suite "Set up", suite "Tear down" test body has step with attachment.`)
+		Suite "Set up", Test "Set up", Test "Tear down", Suite "Tear down" have steps with attachments.`)
 
 	t.Tags("Attachments", "Nesting", "Steps", "BeforeAfter")
 

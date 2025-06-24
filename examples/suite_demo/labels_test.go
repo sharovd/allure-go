@@ -26,10 +26,10 @@ func (s *LabelsDemoSuite) BeforeEach(t provider.T) {
 	t.Tag("EachTestTag")
 }
 
-func (s *LabelsDemoSuite) TestLabelsExample1(t provider.T) {
-	t.Title("Labels Demo Example 1")
+func (s *LabelsDemoSuite) TestLabelsExampleBlockerSeverity(t provider.T) {
+	t.Title("Labels Demo Example: Blocker severity")
 	t.Description(`
-		This Test will have all labels from SetupTest function
+		This Test will have all labels from BeforeEach function
 		Unique labels:
 			ID = "example1"
 			Severity = "blocker"
@@ -44,10 +44,10 @@ func (s *LabelsDemoSuite) TestLabelsExample1(t provider.T) {
 	t.Tag("Example1")
 }
 
-func (s *LabelsDemoSuite) TestLabelsExample2(t provider.T) {
-	t.Title("Labels Demo Example 2")
+func (s *LabelsDemoSuite) TestLabelsExampleCriticalSeverity(t provider.T) {
+	t.Title("Labels Demo Example: Critical severity")
 	t.Description(`
-		This Test will have all labels from SetupTest function
+		This Test will have all labels from BeforeEach function
 		Unique labels:
 			ID = "example2"
 			Severity = "critical"
@@ -62,10 +62,10 @@ func (s *LabelsDemoSuite) TestLabelsExample2(t provider.T) {
 	t.Tag("Example2")
 }
 
-func (s *LabelsDemoSuite) TestLabelsExample3(t provider.T) {
-	t.Title("Labels Demo Example 3")
+func (s *LabelsDemoSuite) TestLabelsExampleNormalSeverity(t provider.T) {
+	t.Title("Labels Demo Example: Normal severity")
 	t.Description(`
-		This Test will have all labels from SetupTest function
+		This Test will have all labels from BeforeEach function
 		Unique labels:
 			ID = "example3"
 			Severity = "normal"
@@ -80,10 +80,10 @@ func (s *LabelsDemoSuite) TestLabelsExample3(t provider.T) {
 	t.Tag("Example3")
 }
 
-func (s *LabelsDemoSuite) TestLabelsExample4(t provider.T) {
-	t.Title("Labels Demo Example 4")
+func (s *LabelsDemoSuite) TestLabelsExampleMinorSeverity(t provider.T) {
+	t.Title("Labels Demo Example: Minor severity")
 	t.Description(`
-		This Test will have all labels from SetupTest function
+		This Test will have all labels from BeforeEach function
 		Unique labels:
 			ID = "example4"
 			Severity = "minor"
@@ -95,10 +95,10 @@ func (s *LabelsDemoSuite) TestLabelsExample4(t provider.T) {
 	t.Tag("Example4")
 }
 
-func (s *LabelsDemoSuite) TestLabelsExample5(t provider.T) {
-	t.Title("Labels Demo Example 5")
+func (s *LabelsDemoSuite) TestLabelsExampleTrivialSeverity(t provider.T) {
+	t.Title("Labels Demo Example: Trivial severity")
 	t.Description(`
-		This Test will have all labels from SetupTest function
+		This Test will have all labels from BeforeEach function
 		Unique labels:
 			ID = "example5"
 			Severity = "trivial"

@@ -17,8 +17,8 @@ func TestSampleDemo(t *testing.T) {
 		t.Epic("Only Provider Demo")
 		t.Feature("runner.RunTest")
 
-		t.Title("Some Sample test")
-		t.Description("allure-go allows you to use allure without suites")
+		t.Title("Some sample test")
+		t.Description("`allure-go allows you to use allure without suites`")
 		t.WithParameters(allure.NewParameter("host", "localhost"))
 
 		t.WithNewStep("Some nested step", func(ctx provider.StepCtx) {
@@ -40,7 +40,7 @@ func TestOtherSampleDemo(realT *testing.T) {
 	r := runner.NewRunner(realT, realT.Name())
 
 	r.BeforeEach(func(t provider.T) {
-		t.NewStep(fmt.Sprintf("This is before test step for %s", t.Name()))
+		t.NewStep(fmt.Sprintf("This is BeforeEach test step for %s", t.Name()))
 	})
 	r.BeforeAll(func(t provider.T) {
 		t.NewStep(fmt.Sprintf("This is BeforeAll test step for %s", t.Name()))
@@ -52,12 +52,10 @@ func TestOtherSampleDemo(realT *testing.T) {
 		t.NewStep(fmt.Sprintf("This is AfterAll test step for %s", t.Name()))
 	})
 
-	r.NewTest("My test 1", func(t provider.T) {
+	r.NewTest("Some other sample test", func(t provider.T) {
 		t.Epic("Only Provider Demo")
 		t.Feature("T.Run()")
-
-		t.Title("Some Other Sample test")
-		t.Description("allure-testify allows you to use allure without suites")
+		t.Description("`allure-testify allows you to use allure without suites`")
 
 		t.WithNewStep("Some nested step", func(ctx provider.StepCtx) {
 			ctx.WithNewStep("Some inner step 1", func(ctx provider.StepCtx) {

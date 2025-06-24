@@ -31,10 +31,10 @@ func (s *LinkDemoSuite) TestLinks(t provider.T) {
 	t.Feature("Links")
 	t.Title("Test contains links")
 	t.Description(`
-		This test contains link with ISSUE, TEST CASE and LINK.
+		This test contains the following links:
 			Test case link: https://tour.golang.org/welcome/1
 			Issue link:     https://pkg.go.dev/github.com/stretchr/testify
-			Link link:      https://www.makeuseof.com/tag/8-purrfect-cat-websites/`)
+			Link:           https://www.makeuseof.com/tag/8-purrfect-cat-websites/`)
 
 	t.Tags("Links")
 
