@@ -23,11 +23,11 @@ func (s *BeforeAfterDemoSuite) AfterEach(t provider.T) {
 }
 
 func (s *BeforeAfterDemoSuite) BeforeAll(t provider.T) {
-	t.NewStep("Before suite Step")
+	t.NewStep("Before Suite Step")
 }
 
 func (s *BeforeAfterDemoSuite) AfterAll(t provider.T) {
-	t.NewStep("After suite Step")
+	t.NewStep("After Suite Step")
 	t.Logf("HI")
 }
 

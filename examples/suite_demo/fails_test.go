@@ -19,29 +19,32 @@ func (s *FailsDemoSuite) BeforeEach(t provider.T) {
 	t.Feature("Failures")
 }
 
-func (s *FailsDemoSuite) TestAssertionFail(t provider.T) {
-	t.Title("This test failed by assert with message")
+func (s *FailsDemoSuite) TestAssertionFailMessage(t provider.T) {
+	t.Title("This test failed with message by assert")
 	t.Description(`
 		This Test will be failed with assert Error.
-		Error text: Assertion Failed`)
+		Error text:
+					Not equal:
+					expected: 1
+					actual  : 2
+		Error message: Assertion Failed`)
 	t.Tags("fail", "assertions")
 
 	t.Require().Equal(1, 2, "Assertion Failed")
 }
 
-func (s *FailsDemoSuite) TestXSkipFail(t provider.T) {
-	t.Title("This test skipped by assert with message")
+func (s *FailsDemoSuite) TestXSkip(t provider.T) {
+	t.Title("This test skipped")
 	t.Description(`
-		This Test will be skipped with assert Error.
-		Error text: Assertion Failed`)
-	t.Tags("fail", "xskip", "assertions")
+		This Test will be skipped`)
+	t.Tags("fail", "xskip")
 
 	t.XSkip()
-	t.Require().Equal(1, 2, "Assertion Failed")
+	t.Require().Equal(1, 2, "Never reach this")
 }
 
 func (s *FailsDemoSuite) TestAssertionFailNoMessage(t provider.T) {
-	t.Title("This test failed by assert without message")
+	t.Title("This test failed without message by assert")
 	t.Description(`
 		This Test will be failed with assert Error.
 		Error text:
@@ -55,13 +58,14 @@ func (s *FailsDemoSuite) TestAssertionFailNoMessage(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestAssertionFailInnerSteps(t provider.T) {
-	t.Title("This test failed by assert with inner step")
+	t.Title("This test failed with message by assert in an inner step")
 	t.Description(`
 		This Test will be failed with assert Error.
 		Error text:
 					Not equal:
 					expected: 1
-					actual  : 2`)
+					actual  : 2
+		Error message: Failed inside step`)
 
 	t.Tags("fail", "assertions", "nesting")
 
@@ -73,13 +77,13 @@ func (s *FailsDemoSuite) TestAssertionFailInnerSteps(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestPanic(t provider.T) {
-	t.Title("This test panicked")
+	t.Title("This test broken by panic")
 	t.Description(`
-		This Test will Failed by panic.
+		This Test will be broken by panic.
 		Error text:
-	test panicked: runtime error: index out of range [0] with length 0 goroutine 8 [running]:...`)
+		test panicked: runtime error: index out of range [0] with length 0...`)
 
-	t.Tags("fail", "panic")
+	t.Tags("fail", "broken", "panic")
 
 	var test []string
 	test2 := test[0]
@@ -87,14 +91,14 @@ func (s *FailsDemoSuite) TestPanic(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestPanicInnerSteps(t provider.T) {
-	t.Title("This test panicked with inner steps")
+	t.Title("This test broken by panic in an inner step")
 	t.Description(`
-		This Test will Failed by panic.
-		All steps that includes error will be failed
+		This Test will be broken by panic.
+		All steps that includes panic will be broken.
 		Error text:
-	test panicked: runtime error: index out of range [0] with length 0 goroutine 8 [running]:...`)
+		test panicked: runtime error: index out of range [0] with length 0...`)
 
-	t.Tags("fail", "panic", "nesting")
+	t.Tags("fail", "broken", "panic", "nesting")
 
 	t.WithNewStep("Check 1", func(ctx provider.StepCtx) {
 		ctx.WithNewStep("Check 1.1", func(ctx provider.StepCtx) {
@@ -111,10 +115,9 @@ func (s *FailsDemoSuite) TestPanicInnerSteps(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenStatusNoMessage(t provider.T) {
-	t.Title("This test fails with broken status")
+	t.Title("This test broken without message")
 	t.Description(`
-		This Test will Failed as Fail().
-		Test status will be "Broken" in allure.
+		This Test will be broken.
 		No any message expected there`)
 
 	t.Tags("fail", "broken")
@@ -125,10 +128,9 @@ func (s *FailsDemoSuite) TestBrokenStatusNoMessage(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenNowStatusNoMessage(t provider.T) {
-	t.Title("This test fails immediately with broken status")
+	t.Title("This test broken immediately without message")
 	t.Description(`
-		This Test will Failed as Fail().
-		Test status will be "Broken" in allure.
+		This Test will be broken.
 		No any message expected there`)
 
 	t.Tags("fail", "broken")
@@ -139,11 +141,11 @@ func (s *FailsDemoSuite) TestBrokenNowStatusNoMessage(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenNowStatusMessage(t provider.T) {
-	t.Title("This test fails immediately with broken status and message")
+	t.Title("This test broken immediately with message")
 	t.Description(`
-		This Test will Failed as FailNow().
-		Test status will be "Broken" in allure.
-		No any message expected there`)
+		This Test will be broken.
+		Error message:
+		Test fails as FailNow()`)
 
 	t.Tags("fail", "broken")
 
@@ -153,10 +155,9 @@ func (s *FailsDemoSuite) TestBrokenNowStatusMessage(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenStatusNoMessageStep(t provider.T) {
-	t.Title("This test fails with broken status inside step")
+	t.Title("This test broken without message in a step")
 	t.Description(`
-		This Test will Failed as Fail().
-		Test status will be "Broken" in allure.
+		This Test will be broken.
 		No any message expected there`)
 
 	t.Tags("fail", "broken")
@@ -168,10 +169,9 @@ func (s *FailsDemoSuite) TestBrokenStatusNoMessageStep(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenNowStatusNoMessageStep(t provider.T) {
-	t.Title("This test fails immediately with broken status inside step")
+	t.Title("This test broken immediately without message in a step")
 	t.Description(`
-		This Test will Failed as Fail().
-		Test status will be "Broken" in allure.
+		This Test will be broken.
 		No any message expected there`)
 
 	t.Tags("fail", "broken")
@@ -183,11 +183,11 @@ func (s *FailsDemoSuite) TestBrokenNowStatusNoMessageStep(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenNowStatusMessageStep(t provider.T) {
-	t.Title("This test fails immediately with broken status and message inside step")
+	t.Title("This test broken immediately with message in a step")
 	t.Description(`
-		This Test will Failed as FailNow().
-		Test status will be "Broken" in allure.
-		No any message expected there`)
+		This Test will be broken.
+		Error message:
+		Test fails as FailNow()`)
 
 	t.Tags("fail", "broken")
 
@@ -198,13 +198,13 @@ func (s *FailsDemoSuite) TestBrokenNowStatusMessageStep(t provider.T) {
 }
 
 func (s *FailsDemoSuite) TestBrokenNowStatusMessageInnerStep(t provider.T) {
-	t.Title("This test fails immediately with broken status and message inside inner step")
+	t.Title("This test broken immediately with message in an inner step")
 	t.Description(`
-		This Test will Failed as FailNow().
-		Test status will be "Broken" in allure.
-		No any message expected there`)
+		This Test will be broken.
+		Error message:
+		Test fails as FailNow()`)
 
-	t.Tags("fail", "broken", "inner")
+	t.Tags("fail", "broken", "nesting")
 
 	t.WithNewStep("This step will be broken", func(sCtx provider.StepCtx) {
 		sCtx.WithNewStep("Inner step", func(sCtx provider.StepCtx) {

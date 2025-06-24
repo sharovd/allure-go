@@ -139,13 +139,13 @@ func (s *NestedAttachmentDemoSuite) TestNestedAttachment(t provider.T) {
 	t.Feature("Attachments")
 	t.Title("Test NestedAttachments")
 	t.Description(`
-		Test "Set up", Test "Tear down", suite "Set up", suite "Tear down" test body has step with attachmentt.`)
+		Test "Set up", Test "Tear down", suite "Set up", suite "Tear down" test body has step with attachment.`)
 
 	t.Tags("Attachments", "Nesting", "Steps", "BeforeAfter")
 
 	t.WithNewStep("TestNestedAttachment step", func(ctx provider.StepCtx) {
 		attachmentText := `THIS IS A TEXT ATTACHMENT`
-		ctx.WithAttachments(allure.NewAttachment("Text Attachment for After Test", allure.Text, []byte(attachmentText)))
+		ctx.WithAttachments(allure.NewAttachment("Text Attachment for TestNestedAttachment step", allure.Text, []byte(attachmentText)))
 	})
 }
 
