@@ -22,9 +22,11 @@ func (s *ParametrizedSuite) BeforeAll(t provider.T) {
 	}
 }
 
-func (s *ParametrizedSuite) TableTestCities(t provider.T, city string) {
+func (s *ParametrizedSuite) TestTableCities(t provider.T) {
 	t.Parallel()
-	t.Require().NotEmpty(city)
+	for _, city := range s.ParamCities {
+		t.Require().NotEmpty(city)
+	}
 }
 
 func TestNewParametrizedDemo(t *testing.T) {
