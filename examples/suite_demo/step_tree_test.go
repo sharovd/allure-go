@@ -20,7 +20,7 @@ func (s *StepTreeDemoSuite) TestInnerSteps(t provider.T) {
 	t.Title("Simple Nesting")
 	t.Description(`
 		Step A is parent step for Step B and Step C
-		Call order will be saved in allure report
+		Call order will be saved in Allure report
 		A -> (B, C)`)
 
 	t.Tags("Steps", "Nesting")
@@ -36,10 +36,11 @@ func (s *StepTreeDemoSuite) TestComplexStepTree(t provider.T) {
 	t.Feature("Inner Steps")
 	t.Title("Complex Nesting")
 	t.Description(`
-		Step A is parent for Step B, Step C and Step F
+		Step A is parent for Step B, Step C, Step F and Step I
 		Step C is parent for Step D and Step E
 		Step F is parent for Step G and Step H
-		Call order will be saved in allure report
+		Step I has no child steps
+		Call order will be saved in Allure report
 		A -> (B, C -> (D, E), F -> (G, H), I)`)
 
 	t.Tags("Steps", "Nesting")

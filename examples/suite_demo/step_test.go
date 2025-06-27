@@ -19,9 +19,11 @@ type StepDemoSuite struct {
 func (s *StepDemoSuite) TestAddSteps(t provider.T) {
 	t.Epic("Demo")
 	t.Feature("Steps")
-	t.Title("Base. Add steps to allure result")
+	t.Title("Add steps to Allure report")
 	t.Description(`
-		Step A, Step B and Step C will be add to Allure Result`)
+		Step A, Step B and Step C will be add to Allure report
+		Step B contains paramB with value
+		Step C contains paramC with value`)
 
 	t.Tags("Steps")
 
@@ -43,18 +45,18 @@ func (s *StepDemoSuite) TestAddSteps(t provider.T) {
 	t.Step(stepC)
 }
 
-func (s *StepDemoSuite) TestQuickWorkWithSteps(t provider.T) {
+func (s *StepDemoSuite) TestAddStepsWithDifferentStatuses(t provider.T) {
 	t.Epic("Demo")
 	t.Feature("Steps")
-	t.Title("Base. Add steps to allure result")
+	t.Title("Add steps with different statuses to Allure report")
 	t.Description(`
-		Step A, Step B, Step C and Step D will be add to Allure Result`)
+		Step A (Passed), Step B (Failed), Step C (Skipped) and Step D (Passed) will be add to Allure report`)
 
 	t.Tags("Steps")
 
-	t.Step(allure.NewSimpleStep("Step A").Passed())  // This step will be passed
-	t.Step(allure.NewSimpleStep("Step B").Failed())  // This step will be failed
-	t.Step(allure.NewSimpleStep("Step C").Skipped()) // This step will be skipped
+	t.Step(allure.NewSimpleStep("Step A").Passed())
+	t.Step(allure.NewSimpleStep("Step B").Failed())
+	t.Step(allure.NewSimpleStep("Step C").Skipped())
 
 	stepD := allure.NewSimpleStep("Step D").Begin()
 	time.Sleep(1 * time.Second) // Do some
@@ -66,10 +68,11 @@ func (s *StepDemoSuite) TestInnerStep(t provider.T) {
 	t.Epic("Demo")
 	t.Layer("Layer")
 	t.Feature("Steps")
-	t.Title("Add child steps to existed step.")
+	t.Title("Add inner steps to existed steps in Allure report")
 	t.Description(`
 		Step A is parent step for Step B and Step C
 		Step D is parent step for Step E and Step F
+		Step F contains paramF with value
 		Call order will be saved in allure report
 		A -> (B, C), D -> (E, F)`)
 

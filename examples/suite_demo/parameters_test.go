@@ -35,7 +35,8 @@ func (s *ParametersDemoSuite) TestAddParameterToStep(t provider.T) {
 
 	// with step.WithParameters(s) function
 	step.WithParameters(allure.NewParameter("Param1", "Val1"))
-	step.WithParameters(allure.NewParameters("Param2", "Val2", "Param3", "Val3", "Param4", "Val4")...)
+	step.WithParameters(allure.NewParameters("Param2", "Val2", "Param3", "Val3",
+		"Param4", "Val4", "Param5", "Val5", "Param6", "Val6", "Param7", "Val7")...)
 
 	// don't forget register your step :)
 	t.Step(step)

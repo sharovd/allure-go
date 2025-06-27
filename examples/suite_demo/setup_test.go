@@ -38,13 +38,13 @@ func (s *SetupSuite) BeforeAll(t provider.T) {
 		params = append(params, allure.NewParameter(fmt.Sprintf("Ex %d", i), param))
 		s.ParamMyTest = append(s.ParamMyTest, param)
 	}
-	t.NewStep("BeforeAllStep", params...)
+	t.NewStep("BeforeAll Step", params...)
 }
 
 func (s *SetupSuite) BeforeEach(t provider.T) {
 	t.Epic("Demo")
 	t.Feature("BeforeAfter")
-	t.NewStep("This Step will be before Each")
+	t.NewStep("BeforeEach Step")
 }
 
 func (s *SetupSuite) AfterEach(t provider.T) {
@@ -55,47 +55,52 @@ func (s *SetupSuite) AfterAll(t provider.T) {
 	t.NewStep("AfterAll Step")
 }
 
-func (s *SetupSuite) TableTestMyTest(t provider.T, example *Example) {
-	t.Titlef("TableTest With Setup - %s", example)
-	t.Descriptionf(`
+func (s *SetupSuite) TestTable(t provider.T) {
+	for _, example := range s.ParamMyTest {
+		t.Run(fmt.Sprintf("TestTable With Setup - %s", example), func(t provider.T) {
+			t.Epic("Demo")
+			t.Feature("BeforeAfter")
+			t.Descriptionf(`
 		Test will unpack all data from passed parameter to the variables in WithTestSetup func.
 		After test finish, it will do ctx.Done() in TestTearDown.
 		All Setup and TearDown tests will be add as Befores and Afters to test's container.
 		Used Data: %s`, example)
-	t.Tags("Parametrized", "Parallel", "Setup", "BeforeAfter")
+			t.Tags("Parametrized", "Parallel", "Setup", "BeforeAfter")
+			t.Parallel()
 
-	t.Parallel()
-	var (
-		country string
-		year    int
-		ctx     context.Context
-	)
+			var (
+				country string
+				year    int
+				ctx     context.Context
+			)
 
-	defer t.WithTestTeardown(func(t provider.T) {
-		t.WithNewStep("Close ctx", func(sCtx provider.StepCtx) {
-			ctx.Done()
-			sCtx.WithNewParameters("ctx", ctx)
-		})
-	})
+			defer t.WithTestTeardown(func(t provider.T) {
+				t.WithNewStep("Close ctx", func(sCtx provider.StepCtx) {
+					ctx.Done()
+					sCtx.WithNewParameters("ctx", ctx)
+				})
+			})
 
-	t.WithTestSetup(func(t provider.T) {
-		t.WithNewStep("init country", func(sCtx provider.StepCtx) {
-			country = example.country
-			sCtx.WithNewParameters("country", country)
-		})
-		t.WithNewStep("init year", func(sCtx provider.StepCtx) {
-			year = example.number
-			sCtx.WithNewParameters("year", year)
-		})
-		t.WithNewStep("init ctx", func(sCtx provider.StepCtx) {
-			ctx = context.Background()
-			sCtx.WithNewParameters("ctx", ctx)
-		})
-	})
+			t.WithTestSetup(func(t provider.T) {
+				t.WithNewStep("init country", func(sCtx provider.StepCtx) {
+					country = example.country
+					sCtx.WithNewParameters("country", country)
+				})
+				t.WithNewStep("init year", func(sCtx provider.StepCtx) {
+					year = example.number
+					sCtx.WithNewParameters("year", year)
+				})
+				t.WithNewStep("init ctx", func(sCtx provider.StepCtx) {
+					ctx = context.Background()
+					sCtx.WithNewParameters("ctx", ctx)
+				})
+			})
 
-	t.Require().NotEqual("PonyCountry", country, "No magic countries in the list")
-	t.Require().NotEqual(2007, year, "No one returned to 2007")
-	t.Require().NotNil(ctx, "Not empty context")
+			t.Require().NotEqual("PonyCountry", country, "No magic countries in the list")
+			t.Require().NotEqual(2007, year, "No one returned to 2007")
+			t.Require().NotNil(ctx, "Not empty context")
+		})
+	}
 }
 
 func (s *SetupSuite) TestMyOtherTest(t provider.T) {
