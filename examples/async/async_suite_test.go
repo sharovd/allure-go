@@ -22,8 +22,8 @@ func (s *SuiteAsyncDemo) BeforeEach(t provider.T) {
 	t.Tags("async", "suite", "steps")
 }
 
-func (s *SuiteAsyncDemo) TestAsyncSuiteDemo1(t provider.T) {
-	t.Title("Async Test 1")
+func (s *SuiteAsyncDemo) TestAsyncSuiteDemoPassed(t provider.T) {
+	t.Title("Async Passed Test")
 
 	startSign := fmt.Sprintf("%s", time.Now())
 	t.Parallel()
@@ -37,23 +37,8 @@ func (s *SuiteAsyncDemo) TestAsyncSuiteDemo1(t provider.T) {
 	})
 }
 
-func (s *SuiteAsyncDemo) TestAsyncSuiteDemo2(t provider.T) {
-	t.Title("Async Test 2")
-
-	startSign := fmt.Sprintf("%s", time.Now())
-	t.Parallel()
-	t.WithNewStep("Sync Step Demo", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", startSign)
-		ctx.Logf("Test 2 Started At: %s", startSign)
-		time.Sleep(3 * time.Second)
-		stopSign := fmt.Sprintf("%s", time.Now())
-		ctx.Logf("Test 2 Stopped At: %s", stopSign)
-		ctx.WithNewParameters("Stop", stopSign)
-	})
-}
-
-func (s *SuiteAsyncDemo) TestAsyncSuiteDemo3(t provider.T) {
-	t.Title("Async Test 3")
+func (s *SuiteAsyncDemo) TestAsyncSuiteDemoFailed(t provider.T) {
+	t.Title("Async Failed Test")
 	t.Description(`
 		This test should be failed. But all logs a correct.`)
 
@@ -72,10 +57,10 @@ func (s *SuiteAsyncDemo) TestAsyncSuiteDemo3(t provider.T) {
 	})
 }
 
-func (s *SuiteAsyncDemo) TestAsyncSuiteDemo4(t provider.T) {
-	t.Title("Async Test 4")
+func (s *SuiteAsyncDemo) TestAsyncSuiteDemoBroken(t provider.T) {
+	t.Title("Async Broken Test")
 	t.Description(`
-		This test should be panic. But all logs a correct.`)
+		This test should be broken by panic. But all logs a correct.`)
 
 	startSign := fmt.Sprintf("%s", time.Now())
 	t.Parallel()

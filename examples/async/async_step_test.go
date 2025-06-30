@@ -22,8 +22,8 @@ func (s *StepAsyncDemo) BeforeEach(t provider.T) {
 	t.Tags("async", "suite", "steps")
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo1(t provider.T) {
-	t.Title("Test with async steps 1")
+func (s *StepAsyncDemo) TestAsyncStepsDemo(t provider.T) {
+	t.Title("Test with async steps")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -39,8 +39,8 @@ func (s *StepAsyncDemo) TestAsyncStepDemo1(t provider.T) {
 	})
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo2(t provider.T) {
-	t.Title("Test with async steps 2")
+func (s *StepAsyncDemo) TestAsyncStepsWithInnerStepsDemo(t provider.T) {
+	t.Title("Test with async steps and inner steps")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -54,41 +54,8 @@ func (s *StepAsyncDemo) TestAsyncStepDemo2(t provider.T) {
 	})
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo3(t provider.T) {
-	t.Title("Test with async steps 3")
-
-	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		time.Sleep(3 * time.Second)
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-
-	t.WithNewAsyncStep("Async Step 2", func(ctx provider.StepCtx) {
-		t.Title("Test with async steps 1")
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		time.Sleep(3 * time.Second)
-		ctx.Logf("Step 2 Stopped At: %s", fmt.Sprintf("%s", time.Now()))
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-}
-
-func (s *StepAsyncDemo) TestAsyncStepDemo4(t provider.T) {
-	t.Title("Test with async steps 4")
-
-	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		ctx.WithNewAsyncStep("Async Step 1.1", func(ctx provider.StepCtx) {
-			ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-			time.Sleep(3 * time.Second)
-			ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-		})
-		time.Sleep(3 * time.Second)
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-}
-
-func (s *StepAsyncDemo) TestAsyncStepDemo5(t provider.T) {
-	t.Title("Test with async steps 5")
+func (s *StepAsyncDemo) TestAsyncStepsPanicInAStepDemo(t provider.T) {
+	t.Title("Test with async steps and panic in a step")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -106,8 +73,8 @@ func (s *StepAsyncDemo) TestAsyncStepDemo5(t provider.T) {
 	})
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo6(t provider.T) {
-	t.Title("Test with async steps 6")
+func (s *StepAsyncDemo) TestAsyncStepsPanicInAnInnerStepDemo(t provider.T) {
+	t.Title("Test with async steps and panic in an inner step")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -124,8 +91,8 @@ func (s *StepAsyncDemo) TestAsyncStepDemo6(t provider.T) {
 	})
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo7(t provider.T) {
-	t.Title("Test with async steps 7")
+func (s *StepAsyncDemo) TestAsyncStepsFailedInAStepDemo(t provider.T) {
+	t.Title("Test with async steps and fail by assert in a step")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -143,8 +110,8 @@ func (s *StepAsyncDemo) TestAsyncStepDemo7(t provider.T) {
 	})
 }
 
-func (s *StepAsyncDemo) TestAsyncStepDemo8(t provider.T) {
-	t.Title("Test with async steps 8")
+func (s *StepAsyncDemo) TestAsyncStepsFailedInAnInnerStepDemo(t provider.T) {
+	t.Title("Test with async steps and fail by assert in an inner step")
 
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
 		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
@@ -171,8 +138,8 @@ func (s *AsyncSuiteStepDemo) BeforeEach(t provider.T) {
 	t.Tags("async", "suite", "steps")
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo1(t provider.T) {
-	t.Title("Async Test with async steps 1")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsParallelDemo(t provider.T) {
+	t.Title("Test with async steps (parallel)")
 
 	t.Parallel()
 
@@ -190,8 +157,8 @@ func (s *AsyncSuiteStepDemo) TestAsyncStepDemo1(t provider.T) {
 	})
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo2(t provider.T) {
-	t.Title("Async Test with async steps 2")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsWithInnerStepsParallelDemo(t provider.T) {
+	t.Title("Test with async steps and inner steps (parallel)")
 
 	t.Parallel()
 
@@ -207,44 +174,8 @@ func (s *AsyncSuiteStepDemo) TestAsyncStepDemo2(t provider.T) {
 	})
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo3(t provider.T) {
-	t.Title("Async Test with async steps 3")
-
-	t.Parallel()
-
-	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		time.Sleep(3 * time.Second)
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-
-	t.WithNewAsyncStep("Async Step 2", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		time.Sleep(3 * time.Second)
-		ctx.Logf("Step 2 Stopped At: %s", fmt.Sprintf("%s", time.Now()))
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-}
-
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo4(t provider.T) {
-	t.Title("Async Test with async steps 4")
-
-	t.Parallel()
-
-	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
-		ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-		ctx.WithNewAsyncStep("Async Step 1.1", func(ctx provider.StepCtx) {
-			ctx.WithNewParameters("Start", fmt.Sprintf("%s", time.Now()))
-			time.Sleep(3 * time.Second)
-			ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-		})
-		time.Sleep(3 * time.Second)
-		ctx.WithNewParameters("Stop", fmt.Sprintf("%s", time.Now()))
-	})
-}
-
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo5(t provider.T) {
-	t.Title("Async Test with async steps 5")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsPanicInAStepParallelDemo(t provider.T) {
+	t.Title("Test with async steps and panic in a step (parallel)")
 
 	t.Parallel()
 
@@ -264,8 +195,8 @@ func (s *AsyncSuiteStepDemo) TestAsyncStepDemo5(t provider.T) {
 	})
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo6(t provider.T) {
-	t.Title("Async Test with async steps 6")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsPanicInAnInnerStepParallelDemo(t provider.T) {
+	t.Title("Test with async steps and panic in an inner step (parallel)")
 
 	t.Parallel()
 
@@ -285,8 +216,8 @@ func (s *AsyncSuiteStepDemo) TestAsyncStepDemo6(t provider.T) {
 	})
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo7(t provider.T) {
-	t.Title("Async Test with async steps 7")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsFailedInAStepParallelDemo(t provider.T) {
+	t.Title("Test with async steps and fail by assert in a step (parallel)")
 
 	t.Parallel()
 	t.WithNewAsyncStep("Async Step 1", func(ctx provider.StepCtx) {
@@ -305,8 +236,8 @@ func (s *AsyncSuiteStepDemo) TestAsyncStepDemo7(t provider.T) {
 	})
 }
 
-func (s *AsyncSuiteStepDemo) TestAsyncStepDemo8(t provider.T) {
-	t.Title("Async Test with async steps 8")
+func (s *AsyncSuiteStepDemo) TestAsyncStepsFailedInAnInnerStepParallelDemo(t provider.T) {
+	t.Title("Test with async steps and fail by assert in an inner step (parallel)")
 
 	t.Parallel()
 
